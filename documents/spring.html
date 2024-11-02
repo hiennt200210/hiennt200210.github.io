@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spring</title>
+</head>
+<body>
+  <h1>Spring</h1>
+  <p>(Spring Start Here &ndash; Chapter 1. Spring in the real world)</p>
+  <p>Spring dựa trên nguyên tắc IoC.</p>
+  <p>Để có động lực sử dụng thứ gì đó, bạn cần biết thứ đó mang lại giá trị gì cho bạn.</p>
+  <p>Framework cung cấp cho bạn nhiều thành phần khác nhau để xây dựng ứng dụng của mình. Bạn cần biết nên chọn những thành phần nào và cách ghép nối chúng với nhau để tạo ra sản phẩm mong muốn.</p>
+  <p>Mã logic nghiệp vụ chiếm phần rất ít trong toàn bộ cơ sở mã. Phần lớn mã của một ứng dụng là các chức năng chung của hầu hết các ứng dụng.</p>
+  <p>Spring có thể được dùng để phát triển:</p>
+  <ul>
+    <li>Ứng dụng back-end</li>
+    <li>Framework kiểm thử tự động</li>
+    <li>Ứng dụng desktop</li>
+    <li>Ứng dụng mobile</li>
+  </ul>
+  <p>(Để tâm tới lựa chọn thay thế của Spring - Red Hat Quarkus)</p>
+
+  <h2>Spring Core</h2>
+
+  <h3>Spring Context</h3>
+  <p>Spring context là nơi lưu trữ những object instance được framework quản lý. Nó bao gồm một cơ chế phức tạp cho phép Spring kiểm soát các object instance, qua đó cung cấp cho bạn những tính năng của framework.</p>
+  <p>Những object instance được quản lý bởi Spring được gọi là <em>bean</em>.</p>
+  <p>Spring không biết trong ứng dụng của bạn có những lớp nào và không phải lớp nào cũng cần được quản lý bởi Spring. Do đó, bạn cần cung cấp thông tin về những object instance, mối liên hệ giữa chúng, v.v. để thêm vào context và sử dụng chúng.</p>
+
+  <h4>Thêm Bean vào Context</h4>
+  <p>(Spring Start Here &ndash; Chương 2)</p>
+
+Sử dụng @Bean để thêm bean vào context
+Tạo lớp cấu hình bằng @Configuration. Lớp cấu hình là các lớp đặc biệt trong Spring, chúng hướng dẫn Spring thực hiện một số hành động cụ thể (ví dụ, thêm bean vào context)
+Tạo một phương thức trả về bean và được đánh dấu bằng @Bean. @Bean đánh dấu cho khả năng thêm bean vào context của lớp cấu hình.
+Làm cho Spring sử dụng lớp cấu hình khi khởi tạo context
+
+Thêm nhiều bean thuộc cùng một loại vào context
+Mỗi bean khi đó sẽ có một định danh để phân biệt với nhau khi tham chiếu đến chúng.
+Theo mặc định, Spring sẽ lấy tên của phương thức đại diện cho bean để làm định danh cho bean đó. Đó là lý do vì sao tên phương thức đại diện cho bean thường sử dụng danh từ thay vì động từ.
+Bạn cũng có thể tự đặt tên cho bean bằng một trong các cú pháp:
+@Bean(name = “hana”)
+@Bean(value = “hana”)
+@Bean(“hana”)
+Bạn có thể xác định bean mặc định trong trường hợp có nhiều bean cùng loại trong context. Bean mặc định là bean sẽ được trả về khi không xác định tên của bean khi gọi context.getBean(<class>). Tất nhiên, chỉ được phép có một bean trong số các bean cùng loại được xác định bằng @Primary.
+
+Thêm bean vào context bằng steoreo annotation
+Đánh dấu một component bằng @Component. Chỉ việc đánh dấu này thì không làm cho Spring tạo instance và thêm chúng vào context.
+Cho một lớp cấu hình (configuration class) biết nơi định nghĩa các component bằng @ComponentScan. Spring sẽ tạo instance của component đó và thêm chúng vào context.
+
+Trong thực tế, bạn sẽ sử dụng steoreo annotation để thêm bean vào context càng nhiều càng tốt, vì đây là cách làm ngắn gọn hơn. Bạn chỉ dùng đển @Bean annotation trong trường hợp không thể sử dụng steoreo annotation (ví dụ, loại bean bạn muốn thêm vào context là một lớp của thư viện và bạn không có quyền chỉnh sửa mã nguồn của lớp đó để thêm @Component).
+
+So sánh phương pháp sử dụng @Bean annotation và phương pháp sử dụng steoreo annotation khi thêm bean vào context:
+@Bean annotation cho phép bạn toàn quyền kiểm soát quá trình tạo ra bean (thông qua phương thức đại diện cho bean) trong khi steoreo annotation chỉ cho phép bạn tạo ra một instance mặc định.
+@Bean annotation cho phép bạn thêm nhiều bean thuộc cùng một loại vào context trong khi steoreo annotation chỉ thêm một bean vào context đối với mỗi loại bean.
+@Bean annotation cho phép bạn thêm các bean của các lớp bất kỳ vào context trong khi steoreo annotation chỉ cho phép bạn thêm các bean của các lớp được định nghĩa trong ứng dụng của bạn vào trong context.
+@Bean annotation cần nhiều mã hơn, steoreo annotation ngắn gọn hơn.
+
+@PostConstruct và @PreDestroy
+
+Thêm bean vào context bằng phương thức của context instance (có trong Spring 5 trở lên)
+Phương pháp này cho phép bạn thêm logic khi thêm bean vào context (ví dụ, nếu giá trị thuộc tính age > 20 thì thêm bean1, nếu không thì thêm bean2).
+context.registerBean(<bean-name>, <bean-class>, <supplier>, <optional-bean-definition-cutstomizer>)
+
+Ngoài ra, còn có một cách cũ để thêm bean vào context đó là sử dụng tệp cấu hình XML.
+
+Tham chiếu đến instance và tạo mối quan hệ giữa các instance
+context.getBean(A.class) hoặc context.getBean(“beanName”, A.class)
+
+Lưu ý: Spring được thiết kế theo dạng mô-đun, có nghĩa là bạn chỉ thêm các phụ thuộc mà bạn cần vào dự án của mình.
+
+(Chương 3) Truy cập bean trong context
+Mối quan hệ (hay sự phụ thuộc) giữa các bean
+
+Tạo mối quan hệ phụ thuộc giữa các bean được thêm vào context bằng annotation @Bean
+Wired: Gọi trực tiếp các phương thức đại diện bean.
+Auto-wiring: Spring truyền bean vào làm đối số phương thức.
+
+Dependency Injection
+Là một kiểu auto-wiring
+
+Field injection
+Nhược điểm:
+Không thể chèn phụ thuộc vào trường hằng số (vì từ khóa final yêu cầu gán giá trị khi khởi tạo)
+Construction injection
+Nếu lớp chỉ có một hàm khởi tạo, có thể bỏ qua không viết @Autowired (từ Spring 4.3)
+Setter injection
+Không nên sử dụng
+
+Trường hợp có nhiều bean cùng loại:
+Bean có tên trùng với tên tham số (không nên dựa vào phương pháp này vì tên tham số có thể bị sửa đổi trong nhiều tình huống)
+Bean được đánh dấu @Primary
+Bean được xác định bởi @Qualifier
+
+
+
+Spring
+Tại sao cần sử dụng framework?
+Nguyên tắc Inversion of Control (IoC) của framework
+
+Spring Container (Spring Context/Application Context)
+Spring lưu trữ và quản lý các đối tượng để cung cấp các tính năng của framework.
+Container (hay context) là nơi lưu trữ các đối tượng được Spring quản lý.
+Bean là các đối tượng được Spring quản lý.
+Khai báo một đối tượng vào container
+Sử dụng lớp cấu hình @Configuration
+Sử dụng phương thức @Bean (khởi tạo và trả về bean)
+Sử dụng stereotype annotation (@Component và @ComponentScan)
+Sử dụng tệp cấu hình XML
+Sử dụng phương pháp lập trình (chỉ có trên Spring 5 trở lên), cho phép thêm logic khi cấu hình bean
+Khai báo mối quan hệ phụ thuộc giữa các bean
+Wired: Gọi trực tiếp phương thức bean (chỉ dùng được cho các bean được khai báo bằng @Bean)
+Auto-wiring (Dependency Injection)
+Khai báo đối tượng phụ thuộc trong tham số của phương thức bean
+Sử dụng @Autowired
+Field inject
+Constructor inject
+Setter inject
+
+Chương 4. Trừu tượng hóa bean trong Spring context
+Trừu tượng hóa các đối tượng nhằm mục đích tách rời các thành phần khi triển khai.
+Giao diện (interface) đại diện cho những gì mà đối tượng cần.
+
+Khi một đối tượng A phụ thuộc trực tiếp vào chức năng của đối tượng B, sự thay đổi yêu cầu chức năng trong đối tượng A khiến bạn buộc phải thay đổi mã trong A và thay thế B bằng một lớp chức năng khác. Nếu trừu tượng hóa chức năng bằng cách dùng interface, bạn chỉ cần thay thế B bằng một đối tượng chức năng khác (cũng triển khai interface đó) mà không cần thay đổi mã trong A (mã trong A phụ thuộc vào interface, không phụ thuộc trực tiếp vào các đối tượng).
+
+Chương 5. Bean scopes and life cycle
+
+Cách thức và thời điểm bean được tạo ra trong context.
+Mỗi scope là một cách tiếp cận trong việc tạo và quản lý các bean trong context.
+singleton, prototype
+
+Singleton
+Là scope mặc định của Spring.
+Mỗi bean ID tương ứng với chỉ một đối tượng được tạo ra trong context.
+
+Theo mặc định, Spring khởi tạo các đối tượng ngay khi khởi tạo context (eager loading).
+Lazy loading
+
+Prototype
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+Mỗi khi có một tham chiếu tới bean thì một đối tượng mới sẽ được tạo ra trong context.
+
+<h3>Spring Aspects</h3>
+
+<p><em>Khía cạnh (aspect)</em> là những mối quan tâm xuyên suốt (cross-cutting concerns) trong phát triển phần mềm&mdash;những yêu cầu hoặc chức năng xuất hiện ở nhiều nơi khác nhau của hệ thống. Ví dụ:</p>
+<ul>
+  <li>Ghi nhật ký (logging)</li>
+  <li>Xác thực (authentication) và phân quyền (authorization)</li>
+  <li>Xử lý giao dịch (transaction)</li>
+  <li>Xử lý lỗi</li>
+  <li>Caching</li>
+</ul>
+<p>Được gọi là những &ldquo;khía cạnh&rdquo;</em> bởi vì chúng:</p>
+<ul>
+  <li>Xuất hiện trong nhiều mô-đun khác nhau</li>
+  <li>Không thuộc về logic nghiệp vụ của bất kỳ mô-đun nào</li>
+  <li>Thường lặp lại ở nhiều nơi trong mã.</li>
+</ul>
+
+<p><em>Lập trình hướng khía cạnh (Aspect-Oriented Programming &ndash; AOP)</em> là phương pháp lập trình hướng tới việc tổ chức mã nguồn xoay quanh các aspect này. Thay vì để logic của aspect nằm rải rác trong các mô-đun, AOP cho phép chúng ta định nghĩa các aspect tập trung tại một điểm và &ldquo;đan xen&rdquo; (weave) chúng vào mã khi cần thiết.</p>
+
+<p>(Spring Start Here &ndash; Chương 6)</p>
+
+<p>Nhìn chung, <em>aspect</em> là về việc framework kiểm soát việc thực thi các lời gọi phương thức.</p>
+
+<p>Sự kiện kích hoạt một aspect trong Spring luôn là một lời gọi phương thức.</p>
+
+<ul>
+  <li><strong>aspect</strong>: những gì bạn muốn Spring thực thi khi một phương thức được gọi (what)</li>
+  <li><strong>advice</strong>: thời điểm thực thi aspect so với thời điểm phương thức được thực thi (when)</li>
+  <li><strong>pointcut</strong>: những phương thức được áp dụng aspect (which)</li>
+</ul>
+
+Pointcut phải là một phương thức của một bean. Các bean đó sẽ được gọi là aspect target hoặc target object. Để sử dụng aspect, trước hết phải thêm bean vào context.
+Nếu một bean được áp dụng aspect, khi bạn lấy bean ra từ context, Spring sẽ trả về một tham chiếu tới aspect thay vì trả về tham chiếu của bean. Đối tượng mà Spring trả về trong trường hợp này được gọi là proxy object. Việc này được gọi là weaving.
+
+AspectJ pointcut language
+
+Sử dụng các aspect
+Sử dụng aspect excution chain
+
+Bất cứ khi nào bạn cần sử dụng một cơ chế nào đó do Spring cung cấp, bạn phải kích hoạt nó bằng một annotation trên lớp cấu hình.
+
+<p>(Đọc đến tr. 156 6.2.2)</p>
+
+Mục lục
+• Spring Core (Spring Framework)
+     • Spring context (Spring container/IoC container)
+          Quyền điều khiển bị đảo ngược (inversion of control) và thuộc về Spring container.
+          Có vai trò gắn kết mã của bạn với luồng thực thi của framework. Nhiệm vụ của bạn là cho Spring container biết đến các đối tượng của bạn (được gọi là bean) và cách sử dụng chúng.
+     • Spring aspects functionality
+     • The Spring Expression Language (SpEL)
+     • Spring AOP
+          Khả năng kiểm soát các đối tượng (bean). Ví dụ: chặn hành vi của một phương thức.
+          Tương tự như việc sử dụng các interceptor trong Jakarta EE.
+     • Spring Data Access
+          Kết nối và thao tác với CSDL quan hệ.
+          Dựa trên JDBC và các ORM như Hibernate.
+
+Spring Boot
+Cung cấp một cấu hình mặc định cho dự án Spring.
+Giảm số lượng mã cấu hình xuống tối thiểu.
+Dựa trên một “quan điểm” riêng.
+
+Spring MVC
+Xử lý các yêu cầu HTTP (web application/web service).
+Dựa trên Servlet và các công nghệ view như JSP, Thymeleaf, FreeMaker, v.v.
+
+Spring Data
+
+Spring Security
+Bảo mật ứng dụng
+
+</body>
+</html>
