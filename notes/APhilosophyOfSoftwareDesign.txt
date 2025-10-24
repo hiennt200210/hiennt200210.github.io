@@ -1,0 +1,111 @@
+A Philosophy of Software Design
+
+1. Tất cả là về độ phức tạp (Bản chất của thiết kế phần mềm là quản lý độ phức tạp)
+- Lập trình là một hoạt động sáng tạo. (Phụ thuộc vào khả năng sáng tạo và sắp xếp suy nghĩ.)
+- Vì vậy, thách thức lớn nhất của việc lập trình là khả năng hiểu hệ thống mà bạn đang xây dựng.
+- Khi hệ thống phát triển, sự phức tạp tăng dần (việc hiểu hệ thống ngày càng khó khăn hơn) là điều không thể tránh khỏi, bất kể nỗ lực ngăn cản nào.
+- Để xây dựng các hệ thống lớn hơn, chúng ta phải làm cho phần mềm đơn giản hơn.
+- Có 2 cách để khiến phần mềm đơn giản hơn:
+(1) Làm cho mã đơn giản và rõ ràng. (Ví dụ: sử dụng tên một cách nhất quán, loại bỏ các trường hợp đặc biệt trong mã, v.v.)
+(2) Đóng gói độ phức tạp, còn được gọi là thiết kế module. (Hệ thống được chia thành các module tương đối độc lập với nhau để lập trình viên có thể làm việc trên một module mà không cần hiểu chi tiết về các module khác. Bằng cách này, lập trình viên sẽ chỉ tiếp xúc với một phần nhỏ của độ phức tạp tổng thể tại bất kỳ thời điểm nào, không phải tiếp xúc với toàn bộ độ phức tạp cùng một lúc.)
+
+- Phần mềm không giống các hệ thống vật lý, chúng rất dễ thay đổi. Vậy nên thiết kế phần mềm là một quá trình liên tục trong suốt vòng đời phát triển của phần mềm và không bao giờ hoàn thành. (Trong các hệ thống vật lý, quá trình thiết kế thường kết thúc trước khi bắt tay vào xây dựng, được gọi là mô hình Waterfall.)
+- Bạn không thể hình dung thiết kế cho một hệ thống phần mềm lớn đủ tốt để hiểu hết về nó trước khi xây dựng. Do đó, thiết kế ban đầu luôn có một số vấn đề, được tìm ra trong quá trình xây dựng và triển khai hệ thống.
+- Vậy nên, phát triển phần mềm hiện nay dựa vào cách tiếp cận tăng dần, sử dụng nhiều vòng lặp thiết kế - xây dựng - triển khai - đánh giá. Thiết kế bắt đầu từ một nhóm tính năng nhỏ, trải qua các vòng lặp để phát hiện vấn đề trong thiết kế ban đầu, khắc phục vấn đề và hoàn thiện nhóm tính năng trước khi chuyển sang nhóm tính năng tiếp theo (do đó gọi là tăng dần). Bằng cách này, vấn đề của thiết kế ban đầu sẽ được phát hiện và khắc phục ngay khi hệ thống còn nhỏ.
+
+- Vì các kỹ sư phần mềm phải liên tục cải thiện thiết kế hệ thống và thiết kế tốt phụ thuộc vào độ phức tạp nên nhà phát triển phải biết cách quản lý độ phức tạp (bao gồm 2 kỹ năng là nhận biết và giảm thiểu độ phức tạp).
+
+2. Bản chất của sự phức tạp (Cách nhận biết sự tồn tại và nguyên nhân dẫn đến sự phức tạp trong hệ thống phần mềm)
+- Độ phức tạp là bất cứ điều gì liên quan đến cấu trúc của một hệ thống phần mềm khiến cho việc hiểu và sửa đổi hệ thống đó trở nên khó khăn. (Ví dụ: khó hiểu cách thức hoạt động của một đoạn mã, mất rất nhiều công sức để thực hiện một cải tiến nhỏ, không rõ ràng những phần của hệ thống cần được sửa đổi để thực hiện thay đổi, khó sửa một số lỗi mà không gây ra các lỗi khác, v.v.)
+- Trong một hệ thống phức tạp, cần rất nhiều nỗ lực để thực hiện một cải tiến nhỏ. Trong một hệ thống đơn giản, cần nỗ lực tối thiểu để thực hiện các cải tiến lớn.
+- Những hiểu lầm về độ phức tạp:
+• Hệ thống có quy mô lớn thì hệ thống đó phức tạp (hoặc quy mô nhỏ thì đơn giản).
+• Ít dòng mã hơn là đơn giản hơn. (Đôi khi, cách tiếp cận nhiều dòng mã hơn thực sự đơn giản hơn vì nó giúp giảm tải trọng nhận thức.)
+• Hệ thống có thành phần phức tạp thì hệ thống đó phức tạp. (Nếu thành phần phức tạp đó không bao giờ cần sửa đổi thì nó không được tính vào độ phức tạp.) Nghĩa là cô lập độ phức tạp cũng tương đương với loại bỏ nó.
+• Độ phức tạp dựa trên cảm nhận của người đọc mã, không phải cảm nhận của người viết mã.
+• Độ phức tạp không đến đột ngột do một lỗi thiết kế hoặc một lần chỉnh sửa mà nó là sự tích tụ của rất nhiều lần sai phạm. Làm giảm độ phức tạp cho hệ thống khi đó rất khó vì nó đã có ở khắp các nơi. Vì vậy, bạn cần phải quyết liệt ngay từ những sai phạm nhỏ chỉ khiến hệ thống phức tạp thêm một chút.
+- 3 dấu hiệu của độ phức tạp trong hệ thống:
+(1) Sự khuếch đại thay đổi: Một thay đổi tưởng chừng đơn giản lại đòi hỏi phải sửa đổi mã ở nhiều vị trí khác nhau.
+(2) Tải trọng nhận thức cao: Một thay đổi tưởng chừng đơn giản lại đòi hỏi rất nhiều kiến thức liên quan để hoàn thành nhiệm vụ. (Ví dụ: kiến thức về biến toàn cục, kiến thức về giải phóng bộ nhớ khi cấp phát chúng trong C, kiến thức về thư viện, framework khi sử dụng các hàm của chúng, v.v.)
+(3) Điều không biết: Khi thực hiện một thay đổi, lập trình viên không biết ảnh hưởng của thay đổi đó tới những thành phần khác trong hệ thống. (Đây là biểu hiện nguy hiểm nhất vì bạn không biết đến sự tồn tại của vấn đề mà chỉ nhận ra sau khi thực hiện thay đổi và bị lỗi.)
+
+- 2 nguyên nhân gây ra sự phức tạp trong hệ thống:
+(1) Sự phụ thuộc: là khi một đoạn mã không thể được hiểu hoặc sửa đổi một cách độc lập mà nó liên quan đến các đoạn mã khác. (Ví dụ: việc sử dụng hàm phụ thuộc vào chữ ký hàm được khai báo, sử dụng giao thức phụ thuộc vào tiêu chuẩn giao thức, v.v.)
+• Khi mã bị phụ thuộc thay đổi thì mã phụ thuộc cũng phải thay đổi theo.
+• Sự phụ thuộc là không thể tránh khỏi trong phát triển phần mềm. Mục tiêu là giảm thiểu số lượng phụ thuộc và khiến cho các phụ thuộc càng đơn giản, rõ ràng càng tốt.
+(2) Tính mơ hồ: là khi thông tin quan trọng lại không rõ ràng hoặc thiếu thông tin. (Ví dụ: tên biến chung chung, tài liệu không ghi đơn vị của giá trị, v.v.)
+- Sự phụ thuộc gây ra sự khuếch đại thay đổi và tải trọng nhận thức cao. Tính mơ hồ gây ra những điều không biết và một phần làm tăng tải trọng nhận thức.
+
+3. Lập trình chiến lược vs. chiến thuật
+- Tư duy chiến thuật: Trọng tâm là làm cho nó hoạt động (thêm tính năng mới hoặc sửa lỗi) càng nhanh càng tốt. (Có thể là do deadline mà bạn được giao.)
+• Bạn không dành thời gian để tìm ra thiết kế tốt nhất mà chỉ cần nó hoạt động được.
+• Bạn dễ dàng chấp nhận thêm một chút phức tạp để mã hoạt động được. (Xem lại những hiểu lầm về độ phức tạp: độ phức tạp không đến đột ngột mà do tích tụ dần theo thời gian.)
+• Bạn không có kế hoạch cho tương lai.
+*Những lập trình viên khác thường phải dọn dẹp đống hỗn độn do “cơn lốc xoáy chiến thuật” để lại khiến cho họ (những người hùng thực sự) có vẻ như tiến triển chậm hơn những lập trình viên chiến thuật.
+- Tư duy chiến lược: Trọng tâm là tạo ra thiết kế tốt và hoạt động được.
+• Hầu hết mã được thêm vào để mở rộng hệ thống cho nên bạn nên ưu tiên tạo điều kiện thuận lợi cho việc mở rộng trong tương lai.
+
+4. Nguyên tắc thiết kế module (Module phải sâu)
+- Thiết kế module có nghĩa là hệ thống phần mềm được phân tách thành tập hợp các module tương đối độc lập. Các module có thể là lớp, hệ thống con, dịch vụ, v.v.
+- Trong thế giới lý tưởng, các module hoàn toàn độc lập với nhau. Lập trình viên làm việc trên một module sẽ không cần biết bất kỳ điều gì về các module khác. Độ phức tạp của hệ thống bằng độ phức tạp của module phức tạp nhất.
+- Thế giới lý tưởng đó không bao giờ xảy ra. Các module phải có sự liên kết (phụ thuộc) với nhau. Khi một module thay đổi, nhiều khả năng một (hoặc nhiều) module khác cũng phải thay đổi theo.
+- Mục tiêu của thiết kế module là giảm thiểu sự phụ thuộc giữa các module với nhau.
+
+- Một module luôn bao gồm hai phần: giao diện và triển khai.
+• Giao diện (interface): Là tất cả mọi thứ mà nhà phát triển trong một module khác cần biết để sử dụng module này. Giao diện mô tả chức năng và cách sử dụng của module nhưng không mô tả cách hoạt động của nó.
+• Triển khai (implementation): Là phần mã thực hiện các chức năng mà giao diện mô tả.
+- Một nhà phát triển làm việc trên một module cần phải nắm rõ giao diện và triển khai của module đó, cùng với giao diện của tất cả các module mà module đó gọi tới (phụ thuộc vào). Nhà phát triển đó không cần hiểu triển khai của các module khác.
+- Một module được thiết kế tốt là module có giao diện đơn giản hơn nhiều so với triển khai (độ phức tạp của chức năng) của chúng.
+
+- Giao diện của một module cung cấp hai loại thông tin: chính thức và không chính thức.
+• Thông tin chính thức được định nghĩa rõ ràng trong mã (ngôn ngữ lập trình có thể mô tả được). (Ví dụ, giao diện của phương thức là chữ ký của phương thức bao gồm tên, kiểu trả về, các tham số cần truyền, các ngoại lệ có thể ném ra. Giao diện của lớp bao gồm tên, kiểu dữ liệu của tất cả các biến công khai và chữ ký của tất cả các phương thức công khai.)
+• Thông tin không chính thức là những gì ngôn ngữ lập trình không mô tả được (ví dụ, một hàm yêu cầu được gọi trước khi gọi hàm khác). Những thông tin này thường được mô tả bằng chú thích trong mã.
+- Trong một giao diện, các thông tin không chính thức thường nhiều và phức tạp hơn thông tin chính thức.
+- Giao diện rõ ràng và cung cấp đầy đủ thông tin về chức năng, cách sử dụng và tác động của module giúp hạn chế những điều chưa biết trong hệ thống.
+
+- Trừu tượng hóa là đơn giản hóa cái nhìn về một thực thể bằng cách giữ lại những chi tiết quan trọng và loại bỏ những chi tiết không liên quan.
+- Trong thiết kế module chính là một sự trừu tượng hóa, giao diện của module là một lớp trừu tượng của chính module đó. Giao diện cung cấp một góc nhìn về chức năng của module và loại bỏ những chi tiết triển khai.
+- Việc xác định chính xác điều gì quan trọng và điều gì không (cần loại bỏ) là chìa khóa của việc trừu tượng hóa. Một trừu tượng hóa là kém nếu nó:
+• Bao gồm những chi tiết không quan trọng, làm tăng tải nhận thức (lớp trừu tượng phức tạp hơn mức cần thiết).
+• Loại bỏ những chi tiết thực sự quan trọng, dẫn đến sự mơ hồ (nhà phát triển không có đủ thông tin).
+
+- Một module sâu nếu nó cung cấp chức năng mạnh mẽ nhưng lại có giao diện đơn giản. (Độ phức tạp của chức năng là diện tích hình chữ nhật, độ phức tạp của giao diện module là chiều dài cạnh trên, độ sâu của module là chiều cao hình chữ nhật.)
+- Một module đôi khi không cả có giao diện (ví dụ, trình thu gom rác trong Java, Go), chúng giúp giảm độ phức tạp của cả hệ thống rất nhiều.
+* Các tính năng tốt nhất là những tính năng bạn sử dụng mà không biết rằng chúng tồn tại.
+- Một module nông nếu chúng có giao diện phức tạp hơn mức cần thiết so với chức năng mà chúng cung cấp. Độ phức tạp của giao diện gần bằng độ phức tạp của việc triển khai. Việc nghĩ về giao diện không đơn giản hơn việc nghĩ về triển khai. Ghi chú cho phương thức còn dài hơn mã của nó.
+- Các module nông không mang lại nhiều lợi ích (chi phí học cách sử dụng giao diện vượt quá chi phí tự triển khai). Các module nhỏ thường nông.
+
+- Một quan niệm sai lầm hiện nay là các module nên nhỏ (chứ không phải sâu). Ví dụ: các lớp không nên quá lớn, phương thức không nên dài quá n dòng, nếu không bạn cần chia thành nhiều lớp hơn, viết nhiều hàm nhỏ hơn. Điều này làm tăng khối lượng giao diện trong hệ thống, tăng lượng mã boilerplate, tăng độ phức tạp của hệ thống (chứ không phải làm cho nó đơn giản hơn). (Áp dụng quan niệm này một cách cực đoan sẽ dẫn đến hiện tượng classitis, với ví dụ điển hình là thư viện lớp Java.)
+- Cung cấp nhiều lựa chọn là tốt nhưng giao diện nên được thiết kế để trường hợp sử dụng phổ biến nhất (nên được đặt thành mặc định) càng đơn giản càng tốt. (Những hiểu lầm về độ phức tạp: Nếu một module phức tạp nhưng bạn chẳng bao giờ hoặc rất ít khi đụng đến nó thì nó không được tính là phức tạp.) Những lựa chọn thiểu số nếu có thể tách chúng sang một module riêng (có giao diện riêng) thì nhà phát triển lại càng không phải biết về sự tồn tại chúng trong trường hợp sử dụng phổ biến.
+- Bằng cách tách giao diện của một mô-đun khỏi phần triển khai của nó, chúng ta có thể ẩn đi sự phức tạp của việc triển khai khỏi phần còn lại của hệ thống. Người dùng của một mô-đun chỉ cần hiểu sự trừu tượng hóa được cung cấp bởi giao diện của nó. Vấn đề quan trọng nhất trong việc thiết kế các lớp và các mô-đun khác là làm cho chúng trở nên sâu sắc, sao cho chúng có giao diện đơn giản cho các trường hợp sử dụng phổ biến, nhưng vẫn cung cấp các chức năng quan trọng. Điều này tối đa hóa mức độ phức tạp được ẩn giấu.
+Cảnh báo: Nguyên tắc mặc định: Interface của module nên được thiết kế để đơn giản hóa nhất có thể cho trường hợp sử dụng phổ biến nhất.
+
+Chương 5 và một số chương sau sẽ đề cập đến những kỹ thuật để tạo module sâu.
+
+5. Che giấu (và rò rỉ) thông tin (Chỉ cho người dùng module biết những gì cần biết và tiện lợi nhất cho họ)
+* Che giấu thông tin là một trong những kỹ năng quan trọng nhất của thiết kế module.
+- Mỗi module phải che giấu một số thông tin (thường là các quyết định thiết kế, cơ chế hoạt động, chi tiết triển khai, cấu trúc dữ liệu và thuật toán của chính module đó) khỏi những module khác.
+- Thông tin được che giấu bằng cách chỉ giữ sự hiện diện của chúng trong implementation, không cho phép chúng xuất hiện trong interface của module.
+- Khi thông tin không xuất hiện trong interface, những module khác sẽ không thể truy cập chúng. Không thể truy cập thì sẽ không gây ra sự phụ thuộc vào thông tin đó. Nghĩa là khi thông tin đó thay đổi, lập trình viên sẽ chỉ phải sửa đổi implementation của một module duy nhất thay vì nhiều module.
+- Khi thiết kế một module mới, bạn nên suy nghĩ cẩn thận những thông tin nào cần được ẩn giấu trong module đó. Module càng ẩn được nhiều thông tin, interface của nó càng đơn giản, module đó càng sâu hơn.
+Lưu ý: Che giấu thông tin không phải chỉ đơn giản là khai báo các biến và phương thức là private. Từ khóa private chỉ là một cơ chế được dùng để triển khai việc che giấu thông tin. Nếu các phương thức công khai cho phép người dùng thay đổi các giá trị private đó thì đó không còn là che giấu thông tin nữa.
+Lưu ý: Cùng một module nhưng mức độ che giấu thông tin đối với mỗi loại người dùng module khác nhau có thể sẽ khác nhau. Với những trường hợp sử dụng cá biệt (hiếm khi xảy ra), việc tách chúng thành một phương thức khác sẽ giúp người dùng module thông thường không phải tìm hiểu thêm những thông tin không cần thiết.
+
+- Rỏ rỉ thông tin xảy ra khi cùng một kiến thức được sử dụng ở nhiều nơi.
+- Nếu một quyết định thiết kế được triển khai trên nhiều module sẽ khiến các module đó phụ thuộc lẫn nhau. Khi quyết định thiết kế đó thay đổi thì tất cả các module triển khai nó đều phải thay đổi theo.
+- Rò rỉ thông tin có thể xảy ra theo 2 cách:
+• Rò rỉ trên interface của các module (đặc biệt là các module cùng triển khai một quyết định thiết kế)
+• Rò rỉ thông qua các giả định chung giữa các module (ví dụ, giả định về định dạng tệp mà các module sử dụng). Loại rò rỉ này vô hình nên nguy hiểm hơn rò rỉ hữu hình trên interface.
+* Kỹ năng phát hiện rò rỉ thông tin là một trong những kỹ năng quan trọng nhất mà lập trình viên cần có để thiết kế module tốt.
+- Các cách để xử lý rò rỉ thông tin:
+• Nếu các module phụ thuộc lẫn nhau đều nhỏ thì bạn có thể gộp chúng thành một module duy nhất để loại bỏ sự rò rỉ thông tin giữa các module. Module tổng hợp này có khối lượng lớn hơn, interface đơn giản hơn, nên nó sâu hơn.
+• Nếu các module không nhỏ thì bạn có thể tạo một module mới chỉ thực hiện gom thông tin bị rò rỉ trong các module vào một module. Cách này chỉ hiệu quả khi interface của lớp mới có thể che giấu những thông tin bị rò rỉ, nếu không thì bạn chỉ chuyển từ rò rỉ thông tin qua giả định sang rò rỉ thông tin trên interface hoặc từ rò rỉ thông tin trên nhiều interface này sang rò rỉ thông tin trên một interface.
+
+- Một trong những lỗi phổ biến nhất khi thiết kế module dễ tạo ra rò rỉ thông tin là phương pháp phân rã theo thời gian (temporal decomposition). Trong phương pháp này, hệ thống được chia thành các thành phần (module) đại diện cho từng giai đoạn trong một quá trình thực hiện theo thời gian (nghĩa là các thao tác xảy ra tại các thời điểm khác nhau sẽ nằm trên các module khác nhau).
+- Vì các giai đoạn trong một quá trình thực hiện theo thời gian có liên quan trực tiếp với nhau (đầu ra của giai đoạn trước là đầu vào của giai đoạn sau) và có một trình tự nhất định nên các module được thiết kế theo cách này sẽ dễ tạo ra sự phụ thuộc (rò rỉ thông tin) giữa các giai đoạn.
+- Giải pháp là thay vì phân rã theo thời gian thì hãy phân rã theo cơ chế, nghĩa là nếu có hai giai đoạn khác nhau trong quá trình cùng sử dụng một cơ chế nào đó để thực hiện thì nên gộp chúng vào một module để thực hiện cả hai giai đoạn này.
+Lưu ý: Thứ tự không phải là thông tin cần được phản ánh trong cấu trúc module. Khi thiết kế module, hãy tập trung vào những kiến thức cần thiết để thực hiện từng tác vụ, chứ không phải thứ tự thực hiện các tác vụ.
+
+- Vì thiết kế module có thể được sử dụng trong nhiều cấp độ (package, class, method, v.v.) nên các kỹ thuật trong thiết kế module như che giấu thông tin cũng nên được triển khai ở nhiều cấp độ khác nhau. Nếu một class che giấu thông tin với các class khác thì một method trong class đó cũng nên che giấu một số thông tin của nó với phần còn lại của class.
+
+(Đọc tiếp từ Chương 6)
